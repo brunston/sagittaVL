@@ -3,8 +3,10 @@ import time
 import numpy as np
 from PIL import Image
 
-def RGBtoHSV(pixel):
-	rgbprime = [i / 255 for i in pixel]
+# Source: http://www.rapidtables.com/convert/color/rgb-to-hsv.htm
+
+def RGBtoHSV(pixel): # Converts a provided RBG pixel to HSV
+	rgbprime = [i / 255 for i in pixel] # R', G', B' from the link correspond to this list
 	cmax = max(rgbprime)
 	cmin = min(rgbprime)
 	hsvpixel[0] = calcHue(rgbprime, cmax, cmin)
@@ -12,7 +14,7 @@ def RGBtoHSV(pixel):
 	hsvpixel[2] = calcVal(cmax)
 	return hsvpixel
 
-def calcHue(prime, cMax, cMin):
+def calcHue(prime, cMax, cMin): # Calculates the H value of an RGB pixel
 	delta = cMax - cMin
 	if delta == 0:
 		return 0
@@ -26,18 +28,17 @@ def calcHue(prime, cMax, cMin):
 		print("Error in hue calculation.")
 		return 0
 
-def calcSat(cMax, cMin):
+def calcSat(cMax, cMin): # Calculates the S value of an RGB pixel
 	delta = cMax - cMin
 	if cMax == 0:
 		return 0
 	else:
 		return delta / cMax
 
-def calcVal(cMax):
+def calcVal(cMax): # Calculates the V value of an RGB pixel
 	return cMax
 
-def withinXPercent(a, b, x):
-	"""Returns true if b is within x% of a."""
+def withinXPercent(a, b, x): # Returns true if b is within x% of a.
 	return abs((b - a) / a) == x / 100
 
 def search(img, values, range, chunk):
