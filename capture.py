@@ -7,7 +7,7 @@ from time import sleep
 
 camera = PiCamera(resolution=(1640,1232)))
 i = 0
-for filename in camera.capture_continuous('img{counter:03d}'):
+for filename in camera.capture_continuous('img{counter:03d}.jpg'):
     sleep(5)
     i += 1
     if i > 540: #45 minutes of photos
