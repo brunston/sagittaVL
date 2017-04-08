@@ -1,5 +1,6 @@
 #!/usr/bin/python
 from scipy import ndimage
+from scipy.misc import imsave
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.colors as colors
@@ -19,19 +20,20 @@ def detect(image, rgb):
     # ndarray, rgb colors
     im = ndimage.imread(image)
     im_unit = np.array(im/255, dtype='float32')
-    im_hsv = colors.rgb_to_hsv(im_unit)
-    hsv = colors.rgb_to_hsv(rgb)
     im_unit -= rgb
-    im_hsv -= hsv
-    print(im_hsv)
     im_unit *= im_unit
-    im_hsv *= im_hsv
-    im_unit -= 0.05
-    im_hsv -= 0.05 # 5 percent variance
-    plt.imshow(im_hsv)
-    plt.show()
-    print(len(np.where(im_unit<0)[0]), len(np.where(im_unit<0)[1]))
+    im_unit -= 0.05 # 5 percent variance
+    whr = np.where(im_unit<0)
     plt.imshow(im_unit)
+    plt.imshow("detected1")
+    if (len(whr[0]<0) > PCNT_PHOTO_DETECTED or len(whr[1]<0) > PCNT_PHOTO_DETECTED or len(whr[2]<0) > PCNT_PHOTO_DETECTED):
+        print(whr[0])
+        print(im_unit[0])
+        for i in range(len(whr[0])):
+            im_unit[whr[0]][i] = 255
+            im_unit[1][i] = 255
+            im_unit[2][i] = 255
+        imsave("detected" + str(current_photo_num), im_unit, format="png")
     plt.show()
 
 def capture_store_detect_label():
