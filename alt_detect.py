@@ -18,7 +18,7 @@ TWO = np.array([[[ 1, 0.8196, 0]]], dtype='float32')
 THREE = np.array([[[0.6510, 0.0353, 0.2392]]], dtype='float32')
 
 current_photo_num = 1
-
+camera = picamera.PiCamera(resolution=(1600,900))
 # detection on image 
 # image is a filename, and rgb is a ndarray (np.array) of rgb values normalized to 1 for gray
 # or a '#aabbcc' value
@@ -47,7 +47,6 @@ def detect(image, rgb):
 
 def capture_store_detect_label():
     global current_photo_num
-    camera = picamera.PiCamera(resolution=(1600,900))
     camera.capture("captures/photo" + str(current_photo_num) + ".jpg", format="jpeg")
     camera.capture("captures/photosmall" + str(current_photo_num) + ".jpg", resize=(400,225), format="jpeg")
     print("capturing photos " + str(current_photo_num))
