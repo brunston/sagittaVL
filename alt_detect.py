@@ -64,8 +64,11 @@ def capture_store_detect_label():
 #detect('minor.jpg', np.array([[[0.9373, 0.9373, 0.9373]]], dtype='float32'))
 
 # loop
+old_time = int(round(time.time()*1000)) # ms
 while True:
+    global old_time
     current_time = int(round(time.time() * 1000.0)) # in ms
-    elapsed = current_time - current_time # ms
+    elapsed = current_time - old_time # ms
+    old_time = current_time
     if elapsed >= BTWN_PHOTOS:
         capture_store_detect_label()
