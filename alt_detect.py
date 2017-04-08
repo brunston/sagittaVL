@@ -24,6 +24,7 @@ current_photo_num = 1
 # or a '#aabbcc' value
 def detect(image, rgb):
     # ndarray, rgb colors
+    print("detecting " + str(current_photo_num))
     im = ndimage.imread(image)
     im_unit = np.array(im/255, dtype='float32')
     im_unit -= rgb
@@ -37,20 +38,21 @@ def detect(image, rgb):
             im_unit[whr[0][i]][whr[1][i]][1] = 255
             im_unit[whr[0][i]][whr[1][i]][2] = 255
         imsave("detected" + str(current_photo_num), im_unit, format="png")
-        os.remove("photosmall" + str(current_photo_num))
+        os.remove("photosmall" + str(current_photo_num) + ".jpg")
     else:
-        os.remove("photo" + str(current_photo_num))
+        os.remove("photo" + str(current_photo_num) + ".jpg")
     
     plt.show()
 
 def capture_store_detect_label():
     global current_photo_num
-    camera = PiCamera(resolution=(1600,900))
-    camera.capture("photo" + str(current_photo_num))
-    camera.capture("photosmall" + str(current_photo_num), resize=(400,225))
-    detect("photo" + str(current_photo_num), ONE)
-    detect("photo" + str(current_photo_num), TWO)
-    detect("photo" + str(current_photo_num), THREE)
+    camera = picamera.PiCamera(resolution=(1600,900))
+    camera.capture("photo" + str(current_photo_num) + ".jpg", format="jpeg")
+    camera.capture("photosmall" + str(current_photo_num) + ".jpg", resize=(400,225), format="jpeg")
+    print("capturing photos " + str(current_photo_num))
+    detect("photo" + str(current_photo_num) + ".jpg", ONE)
+    detect("photo" + str(current_photo_num) + ".jpg", TWO)
+    detect("photo" + str(current_photo_num) + ".jpg", THREE)
     current_photo_num += 1
 
 # test
