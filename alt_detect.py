@@ -32,14 +32,16 @@ def detect(image, rgb):
     im_unit -= 0.05 # 5 percent variance
     whr = np.where(im_unit<0)
     if (len(whr[0]<0) > PCNT_PHOTO_DETECTED or len(whr[1]<0) > PCNT_PHOTO_DETECTED or len(whr[2]<0) > PCNT_PHOTO_DETECTED):
-        for i in range(len(whr[0])):
-            im_unit[whr[0][i]][whr[1][i]][0] = 255
-            im_unit[whr[0][i]][whr[1][i]][1] = 255
-            im_unit[whr[0][i]][whr[1][i]][2] = 255
+#        for i in range(len(whr[0])):
+#            im_unit[whr[0][i]][whr[1][i]][0] = 255
+#            im_unit[whr[0][i]][whr[1][i]][1] = 255
+#            im_unit[whr[0][i]][whr[1][i]][2] = 255
         imsave("detections/detected" + str(current_photo_num), im_unit, format="png")
-        os.remove("captures/photosmall" + str(current_photo_num) + ".jpg")
+        return True
+#        os.remove("captures/photosmall" + str(current_photo_num) + ".jpg")
     else:
-        os.remove("captures/photo" + str(current_photo_num) + ".jpg")
+        return False
+#        os.remove("captures/photo" + str(current_photo_num) + ".jpg")
     
     plt.show()
 
@@ -49,10 +51,14 @@ def capture_store_detect_label():
     camera.capture("captures/photo" + str(current_photo_num) + ".jpg", format="jpeg")
     camera.capture("captures/photosmall" + str(current_photo_num) + ".jpg", resize=(400,225), format="jpeg")
     print("capturing photos " + str(current_photo_num))
-    detect("captures/photo" + str(current_photo_num) + ".jpg", ONE)
-    detect("captures/photo" + str(current_photo_num) + ".jpg", TWO)
-    detect("captures/photo" + str(current_photo_num) + ".jpg", THREE)
+    if detect("captures/photo" + str(current_photo_num) + ".jpg", ONE) or \
+      detect("captures/photo" + str(current_photo_num) + ".jpg", TWO) or \
+      detect("captures/photo" + str(current_photo_num) + ".jpg", THREE):
+        os.remove("captures/photosmall" + str(current_photo_num) + ".jpg")
+    else:
+        os.remove("captures/photo" + str(current_photo_num) + ".jpg")
     current_photo_num += 1
+
 
 # test
 #detect('minor.jpg', np.array([[[0.9373, 0.9373, 0.9373]]], dtype='float32'))
@@ -60,6 +66,6 @@ def capture_store_detect_label():
 # loop
 while True:
     current_time = int(round(time.time() * 1000.0)) # in ms
-    elapsed = current_time - START_TIME # ms
+    elapsed = current_time - current_time # ms
     if elapsed >= BTWN_PHOTOS:
         capture_store_detect_label()
