@@ -31,7 +31,7 @@ def detect(image, rgb):
     im_unit *= im_unit
     im_unit -= 0.05 # 5 percent variance
     whr = np.where(im_unit<0)
-    if (len(whr[0]<0) > PCNT_PHOTO_DETECTED or len(whr[1]<0) > PCNT_PHOTO_DETECTED or len(whr[2]<0) > PCNT_PHOTO_DETECTED):
+    if (len(whr[0]) > PCNT_PHOTO_DETECTED or len(whr[1]) > PCNT_PHOTO_DETECTED or len(whr[2]) > PCNT_PHOTO_DETECTED):
 #        for i in range(len(whr[0])):
 #            im_unit[whr[0][i]][whr[1][i]][0] = 255
 #            im_unit[whr[0][i]][whr[1][i]][1] = 255
