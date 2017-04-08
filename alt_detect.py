@@ -64,6 +64,7 @@ def capture_store_detect_label():
 #detect('minor.jpg', np.array([[[0.9373, 0.9373, 0.9373]]], dtype='float32'))
 
 # loop
+old_time = int(round(time.time() * 1000.0))
 while True:
     current_time = int(round(time.time() * 1000.0)) # in ms
     elapsed = current_time - old_time # ms
