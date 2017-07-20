@@ -1,0 +1,14 @@
+Pins - servos (A0,A1,A2), serial (0,1), photoresistor (any digital)
+
+Process:
+- Pre-launch timer (if not launched by end, exit)
+- Verify going over 200'
+- Verify going below 750'
+- Deploy first leg
+- Wait
+- Verify photoresistor
+- Deploy second leg
+- Wait
+- Verify (how?)
+- Eject
+- Deploy third leg
