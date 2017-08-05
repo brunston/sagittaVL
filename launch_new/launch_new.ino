@@ -1,8 +1,8 @@
 #include <Servo.h>
 
-#define SERVOPIN_1 0
-#define SERVOPIN_2 1
-#define SERVOPIN_3 2
+#define SERVOPIN_1 9
+#define SERVOPIN_2 10
+#define SERVOPIN_3 11
 
 // Servo positions - calibrate
 #define SERVO1_CLOSED 0
